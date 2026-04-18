@@ -1,0 +1,79 @@
+:root {
+  /* Colores Principales */
+  --color-primary: #1a3668;    /* Azul Marino Logo */
+  --color-secondary: #215da1;  /* Azul Transicional */
+  --color-accent: #2ab0b8;     /* Cian Logo */
+  --color-light-accent: #4ecdc4; /* Verde Agua Análogo */
+
+  /* Neutros para Corporativo */
+  --color-bg: #f8fafc;         /* Fondo Off-white */
+  --color-text: #334155;       /* Texto Gris Oscuro Profesional */
+  --color-white: #ffffff;
+
+  /* Estados */
+  --color-hover: #142a52;      /* Versión más oscura del primario */
+
+    /* COLOR DE CONTRASTE (COMPLEMENTARIO) */
+  --color-action: #ff7f50;           /* Naranja Coral para Venta/Urgencia */
+  --color-action-hover: #e66a3e;     /* Versión más oscura para hover */
+
+}
+
+/* Estilos Base */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  color: var(--color-primary);
+}
+
+.text-highlight {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+/* --- BOTONES --- */
+
+/* Botón Estándar de la Marca (Informativo, "Saber Más") */
+.button-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: none;
+  /*cursor: pointer;*/
+  transition: background 0.3s ease;
+}
+
+.button-primary:hover {
+  background-color: var(--color-hover);
+}
+
+/* BOTÓN DE ACCIÓN / VENTA / URGENCIA ("Cotizar", "Comprar") */
+.btn-action {
+  background-color: var(--color-action);
+  color: var(--color-white);
+  padding: 12px 24px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold; /* Para darle más peso visual */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ligera sombra para destacar */
+}
+
+.btn-action:hover {
+  background-color: var(--color-action-hover);
+  transform: translateY(-1px); /* Efecto de elevación al pasar el ratón */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* --- UTILIDADES DE ESTADO (SEMÁFORO) --- */
+.bg-red { background-color: #ef4444 !important; color: white !important; }
+.bg-yellow { background-color: #f59e0b !important; color: white !important; }
+.bg-green { background-color: #10b981 !important; color: white !important; }
+

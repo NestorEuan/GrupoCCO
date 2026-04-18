@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Evaluación - Grupo CCO</title>
+    <link rel="stylesheet" href="css/coorporativo.css">
+    <style>
+        body {
+            background-color: var(--color-bg);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .survey-container {
+            background: var(--color-white);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .survey-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--color-primary);
+        }
+        .survey-header img {
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+        
+        .dimension-section {
+            margin-bottom: 40px;
+            display: none; /* Se mostrarán una por una o todas, dependiendo de la UX elegida */
+        }
+        .dimension-section.active {
+            display: block;
+        }
+        
+        .dimension-title {
+            color: var(--color-secondary);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--color-accent);
+            padding-left: 10px;
+        }
+        
+        .question-group {
+            margin-bottom: 25px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: block;
+            color: var(--color-text);
+        }
+        
+        .rating-options {
+            display: flex;
+            justify-content: space-between;
+            max-width: 400px;
+        }
+        .rating-options label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .rating-options input[type="radio"] {
+            margin-bottom: 5px;
+            transform: scale(1.2);
+            accent-color: var(--color-accent);
+        }
+        
+        .survey-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #cbd5e1;
+        }
+        
+        .survey-header p.text-muted {
+            font-size: 0.9rem;
+        }
+        .text-muted {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="survey-container">
+        <div class="survey-header">
+            <!-- <img src="assets/logo.png" alt="Grupo CCO Logo"> -->
+            <h2>Metodología de Diagnóstico CCO</h2>
+            <p class="text-muted">Por favor, responde honestamente a las siguientes afirmaciones valorándolas del 1 (Totalmente en desacuerdo) al 6 (Totalmente de acuerdo).</p>
+        </div>
+
+        <form id="surveyForm">
+            <!-- Contenedor Dinámico para las Dimensiones y Preguntas -->
+            <div id="survey-content-container">
+                <p>Cargando cuestionario, por favor espere...</p>
+            </div>
+            
+            <!-- Botonera -->
+            <div class="survey-footer">
+                <button type="button" id="btn-prev" class="button-primary" style="background-color: #94a3b8; display:none;" onclick="prevDimension()">Anterior</button>
+                <div style="flex-grow:1;"></div>
+                <button type="button" id="btn-next" class="btn-action" onclick="nextDimension()">Siguiente</button>
+                <button type="submit" id="btn-submit" class="btn-action" style="display:none; background-color:var(--color-primary);">Finalizar Encuesta</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api_service.js"></script>
+    <script src="js/survey_app.js"></script>
+</body>
+</html>

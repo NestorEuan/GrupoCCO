@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo CCO - Sistema de Evaluación</title>
+    <meta name="description" content="Sistema de evaluación y diagnósticos de Grupo CCO.">
+    <link rel="stylesheet" href="css/coorporativo.css">
+    <style>
+        /* Estilos específicos para la landing/login que extienden coorporativo.css */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--color-bg) 0%, #e2e8f0 100%);
+        }
+        .login-card {
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-card img {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            border-color: var(--color-primary);
+        }
+        .button-full {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <img src="assets/logo.png" alt="Grupo CCO Logo">
+        <h2>Acceso al Sistema</h2>
+        
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="username">Usuario / Correo</label>
+                <input type="text" id="username" required placeholder="admin@grupocco.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            
+            <button type="submit" class="button-primary button-full">Ingresar</button>
+        </form>
+        
+        <p style="margin-top:20px; font-size:0.9rem; color:var(--color-text);">
+            Si eres empleado y deseas realizar una encuesta, 
+            <br>ingresa a través del enlace proporcionado por tu empresa.
+        </p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api_service.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>
