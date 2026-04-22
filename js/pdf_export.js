@@ -1,11 +1,4 @@
-/**
- * Lógica de Exportación a PDF para Reportes de Grupo CCO
- * Utiliza la librería html2pdf.js
- */
-
 async function exportarPDF() {
-    const element = document.getElementById('view-resultados');
-    const btn = document.querySelector('#view-resultados .btn-action');
     const select = document.getElementById('selPeriodoResultado');
     
     // 1. Validaciones previas
@@ -16,14 +9,14 @@ async function exportarPDF() {
 
     const periodoTexto = select.options[select.selectedIndex].text;
     const timestamp = new Date().toISOString().split('T')[0];
+    const element = document.querySelector('.main-content'); // Capturamos el contenido principal
 
-    // 2. Preparar el DOM para la captura (ocultar controles de UI)
-    const uiElements = document.querySelectorAll('#view-resultados .header-top, #view-resultados > div:nth-child(2)');
-    uiElements.forEach(el => el.style.display = 'none');
+    // 2. Activar modo exportación (CSS ocultará sidebar, filtros, etc.)
+    document.body.classList.add('pdf-export-mode');
 
-    // 3. Insertar encabezado de marca temporal para el PDF
+    // 3. Preparar encabezado temporal en el DOM real para que sea capturado
     const reportHeader = document.createElement('div');
-    reportHeader.id = 'pdf-temp-header';
+    reportHeader.id = 'pdf-runtime-header';
     reportHeader.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 3px solid #1a3668; margin-bottom: 25px; padding-bottom: 15px;">
             <div>
@@ -39,39 +32,36 @@ async function exportarPDF() {
             <p style="margin:0; font-size: 16px;"><strong>Campaña evaluada:</strong> ${periodoTexto}</p>
         </div>
     `;
-    element.prepend(reportHeader);
+    const resultsView = document.getElementById('view-resultados');
+    resultsView.prepend(reportHeader);
 
-    // 4. Configuración de html2pdf
+    // 4. Configuración avanzada de html2pdf
     const opt = {
-        margin:       [15, 15, 15, 15],
+        margin:       [10, 10, 10, 10],
         filename:     `Reporte_CCO_${periodoTexto.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { 
             scale: 2, 
             useCORS: true, 
-            letterRendering: true,
-            scrollY: 0
+            letterRendering: true, 
+            scrollY: 0,
+            logging: false
         },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'], before: '.metric-card' }
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
     try {
-        btn.disabled = true;
-        const originalText = btn.innerText;
-        btn.innerText = "Preparando documento...";
-
         // Ejecutar conversión
+        // Esperamos un momento para asegurar que el DOM se ajuste al modo exportación
+        await new Promise(resolve => setTimeout(resolve, 500));
         await html2pdf().set(opt).from(element).save();
-
-        btn.innerText = originalText;
     } catch (error) {
         console.error("Error al generar PDF:", error);
-        alert("Ocurrió un error al intentar generar el PDF. Verifique que todos los recursos se hayan cargado correctamente.");
+        alert("Ocurrió un error al intentar generar el PDF.");
     } finally {
-        // 5. Limpieza y Restauración de la UI
+        // 5. Limpieza: Restaurar UI y quitar encabezado
+        document.body.classList.remove('pdf-export-mode');
         reportHeader.remove();
-        uiElements.forEach(el => el.style.display = '');
-        btn.disabled = false;
     }
 }

@@ -48,11 +48,21 @@
         }
         
         .question-group {
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             background: #f8fafc;
-            padding: 20px;
+            padding: 15px 20px;
             border-radius: 8px;
             border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .question-group.has-error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .question-group.has-error .question-text::after {
+            content: " *";
+            color: #ef4444;
+            font-weight: bold;
         }
         .question-text {
             font-weight: 500;
@@ -86,6 +96,11 @@
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid #cbd5e1;
+            position: sticky;
+            bottom: 0;
+            background: var(--color-white);
+            z-index: 100;
+            padding-bottom: 20px;
         }
         
         .survey-header p.text-muted {

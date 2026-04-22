@@ -25,10 +25,20 @@ class Respuestas extends ResourceController
     public function create()
     {
         $data = $this->request->getJSON(true);
-        if ($this->model->insert($data)) {
-            $data['id'] = $this->model->getInsertID();
-            return $this->respondCreated($data);
+        
+        // Detect if it's a batch insertion (array of arrays)
+        if (isset($data[0]) && is_array($data[0])) {
+            if ($this->model->insertBatch($data)) {
+                return $this->respondCreated(['status' => 'batch_created', 'count' => count($data)]);
+            }
+        } else {
+            // Single insertion
+            if ($this->model->insert($data)) {
+                $data['id'] = $this->model->getInsertID();
+                return $this->respondCreated($data);
+            }
         }
+        
         return $this->failValidationErrors($this->model->errors());
     }
 

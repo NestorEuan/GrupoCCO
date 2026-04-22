@@ -1,5 +1,6 @@
 let currentDimensionIndex = 0;
 let uiDimensions = [];
+const bPrueba = true; // Set to true to auto-fill answers for testing
 
 // Extracción de parámetros de URL (Ejemplo: survey.html?emp=1&per=1)
 const urlParams = new URLSearchParams(window.location.search);
@@ -55,10 +56,12 @@ async function initSurvey() {
                 subdims_agrupadas[subIdVar].forEach(p => {
                     const qGroup = document.createElement('div');
                     qGroup.className = 'question-group';
+                    qGroup.dataset.questionName = `q_${p.id}`;
                     
                     let radiosHtml = '';
                     for(let i=1; i<=6; i++) {
-                        radiosHtml += `<label><input type="radio" name="q_${p.id}" value="${i}" required>${i}</label>`;
+                        const checkedAttr = (typeof bPrueba !== 'undefined' && bPrueba && i === 3) ? 'checked' : '';
+                        radiosHtml += `<label><input type="radio" name="q_${p.id}" value="${i}" required ${checkedAttr}>${i}</label>`;
                     }
 
                     qGroup.innerHTML = `
@@ -103,24 +106,32 @@ function updateButtons() {
 
 function validateCurrentDimension() {
     const currentDiv = uiDimensions[currentDimensionIndex];
-    const radios = currentDiv.querySelectorAll('input[type="radio"]');
-    // Coleccionar todos los names únicos en esta dimensión
-    const names = new Set();
-    radios.forEach(r => names.add(r.name));
+    const questionGroups = currentDiv.querySelectorAll('.question-group');
+    let firstMissing = null;
+    let isValid = true;
 
-    // Revisar si están seleccionados
-    for(let name of names) {
-        const checked = currentDiv.querySelector(`input[name="${name}"]:checked`);
-        if(!checked) return false;
+    questionGroups.forEach(group => {
+        const name = group.dataset.questionName;
+        const checked = group.querySelector(`input[name="${name}"]:checked`);
+        
+        if(!checked) {
+            group.classList.add('has-error');
+            isValid = false;
+            if(!firstMissing) firstMissing = group;
+        } else {
+            group.classList.remove('has-error');
+        }
+    });
+
+    if(!isValid && firstMissing) {
+        firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    return true;
+    
+    return isValid;
 }
 
 window.nextDimension = function() {
-    if(!validateCurrentDimension()) {
-        alert("Por favor responda todas las preguntas de esta sección antes de continuar.");
-        return;
-    }
+    if(!validateCurrentDimension()) return;
 
     uiDimensions[currentDimensionIndex].classList.remove('active');
     currentDimensionIndex++;
@@ -148,24 +159,20 @@ document.getElementById('surveyForm').addEventListener('submit', async (e) => {
     
     try {
         const formData = new FormData(e.target);
-        const promesas = [];
+        const responses = [];
 
         for(let [name, value] of formData.entries()) {
-            // El name viene como "q_15" -> extraer ID 15
             const preguntaId = name.replace('q_', '');
-            
-            // Apilar promesas al servidor para insertar tabla 'respuestas'
-            const postObj = {
+            responses.push({
                 periodo_encuesta_id: PERIODO_ID,
                 empleado_id: EMPLEADO_ID,
                 pregunta_id: preguntaId,
                 valor_respuesta: value
-            };
-            promesas.push(CCOAPI.respuestas.add(postObj));
+            });
         }
 
-        // Ejecutar las insersiones asincronas
-        await Promise.all(promesas);
+        // Ejecutar inserción masiva en una sola petición
+        await CCOAPI.respuestas.add(responses);
 
         document.getElementById('survey-content-container').innerHTML = `
             <div style="text-align:center; padding: 40px 0;">
@@ -184,4 +191,14 @@ document.getElementById('surveyForm').addEventListener('submit', async (e) => {
 });
 
 // Arrancar al cargar la pagina
-window.addEventListener('load', initSurvey);
+window.addEventListener('load', () => {
+    initSurvey();
+    
+    // Escuchar cambios para quitar el error visual en tiempo real
+    document.getElementById('survey-content-container').addEventListener('change', (e) => {
+        if(e.target.type === 'radio') {
+            const group = e.target.closest('.question-group');
+            if(group) group.classList.remove('has-error');
+        }
+    });
+});

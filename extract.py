@@ -13,7 +13,8 @@ dimensions = {
     'Proveedores': 7,
     'Impacto Ambiental': 8,
     'Factores Psicosociales': 9,
-    'Resiliencia y Gestión Entornos': 10
+    'Resiliencia y Gestión Entornos': 10,
+    'Resultados': 11
 }
 
 sql = '-- Desactivar revisión de llaves foráneas para poder hacer Truncate\n'
@@ -32,7 +33,7 @@ pregunta_values = []
 subdimension_id_counter = 1
 
 for sheet in xls.sheet_names:
-    if sheet == 'Consolidado' or sheet == 'Resultados':
+    if sheet == 'Consolidado':
         continue
     
     for dim_key, dim_id in dimensions.items():

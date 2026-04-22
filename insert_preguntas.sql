@@ -38,7 +38,15 @@ INSERT INTO subdimensiones (id, dimension_id, nombre, orden) VALUES
 (26, 9, 'Factores del Equilibrio Laboral / Familiar', 14),
 (27, 9, 'Factores de Carrera Laboral', 16),
 (28, 10, 'General', 1),
-(29, 10, 'Resiliencia y Gestión de Entornos', 1);
+(29, 10, 'Resiliencia y Gestión de Entornos', 1),
+(30, 11, 'General', 1),
+(31, 11, '1.- Resultados Financieros', 1),
+(32, 11, '2.- Resultados de Clientes, Usuarios y Mercados', 5),
+(33, 11, '3.- Resultados de Recursos Humanos', 10),
+(34, 11, '5.- Resultados de Procesos', 24),
+(35, 11, '6.- Resultados de Impacto Ambiental', 32),
+(36, 11, '7.- Resultados de Factores Psicosociales', 33),
+(37, 11, '8.- Resultados de Resiliencia y Gestión de Entornos', 34);
 
 -- Inserción de tabla Preguntas
 INSERT INTO preguntas (encuesta_id, dimension_id, subdimension_id, texto_pregunta, orden) VALUES 
@@ -138,7 +146,41 @@ INSERT INTO preguntas (encuesta_id, dimension_id, subdimension_id, texto_pregunt
 (1, 10, 29, 'a) Se cuentan con procedimientos o mejores prácticas para actuar ante entornos imprevistos, complejos, ambiguos, frágiles o acontecimientos que impliquen un cambio Organizacional disruptivo.', 1),
 (1, 10, 29, 'b) Al encontrarse dentro de entornos imprevistos, complejos, ambiguos, frágiles o acontecimientos que impliquen un cambio Organizacional disruptivo, se cuentan con los procedimientos o mejores prácticas para determinar las mejoras y/o habilidades que necesitan los colaboradores para seguir realizando sus actividades de forma eficaz y eficiente.', 2),
 (1, 10, 29, 'c) Al encontrarse dentro de entornos imprevistos, complejos, ambiguos, frágiles o acontecimientos que impliquen un cambio Organizacional disruptivo, se cuentan con procedimientos o mejores prácticas de contención de factores psicosociales y/ salud organizacional.', 3),
-(1, 10, 29, 'd) Al encontrarse dentro de entornos imprevistos, complejos, ambiguos, frágiles o acontecimientos que impliquen un cambio Organizacional disruptivo, se realizan procedimientos o mejores prácticas para contener y/o fortalecer la Inteligencia Emocional de los colaboradores.', 4);
+(1, 10, 29, 'd) Al encontrarse dentro de entornos imprevistos, complejos, ambiguos, frágiles o acontecimientos que impliquen un cambio Organizacional disruptivo, se realizan procedimientos o mejores prácticas para contener y/o fortalecer la Inteligencia Emocional de los colaboradores.', 4),
+(1, 11, 31, '1).- Rendimiento de Capital: Utilidad Neta / Capital Contable', 1),
+(1, 11, 31, '2).- Margen de Utilidad: Utilidad Neta / Ventas', 2),
+(1, 11, 31, '3).- Utilidad antes de financiamientos e impuestos en números absolutos', 3),
+(1, 11, 31, '4).- Liquidez (Efectivo + cuentas por cobrar) / pasivos circulantes', 4),
+(1, 11, 32, '1).- Ventas en números absolutos en volumén o niveles económicos o segmentación de rentabilidad', 5),
+(1, 11, 32, '2).- Participación de mercado', 6),
+(1, 11, 32, '3).- Satisfacción de clientes', 7),
+(1, 11, 32, '4).- Clientes ganados / Clientes perdidos', 8),
+(1, 11, 32, '5).- Costo de Garantía', 9),
+(1, 11, 33, '1).- Ausentismo', 10),
+(1, 11, 33, '2).- Rotación', 11),
+(1, 11, 33, '3).- Número de accidentes: incidentes + incapacidades', 12),
+(1, 11, 33, '4).- Porcentaje de personal involucrado en proyectos de mejora', 13),
+(1, 11, 33, '5).- Programa de Desarrollo (Capacitación / Planes de Carrera)', 14),
+(1, 11, 33, '6).- Efectividad de los Programas de Desarrollo', 15),
+(1, 11, 33, '7).- Satisfacción del Personal', 16),
+(1, 11, 33, '8).- Gestión del Desempeño / Productividad', 17),
+(1, 11, 33, '9).- Sistema de Compensaciones / Reconocimientos', 18),
+(1, 11, 33, '10).- Relaciones Laborales', 19),
+(1, 11, 33, '11).- Resultados del Liderazgo', 20),
+(1, 11, 33, '1).- Inversión en diseño y desarrollo / ventas', 21),
+(1, 11, 33, '2).- Cumplimiento de presupuesto de lanzamiento de nuevos productos en porcentaje', 22),
+(1, 11, 33, '3).- Tiempo real de desarrollo de nuevos productos vs tiempo programado', 23),
+(1, 11, 34, '1).- Productividad: Productos o servicios realizados / Costos de la Producción - Operación', 24),
+(1, 11, 34, '2).- Calidad del producto y/o servicio', 25),
+(1, 11, 34, '3).- Rotación de inventario: Costo de Ventas / Inventario', 26),
+(1, 11, 34, '4).- Días de Inventario: (Inventario / Costo de Ventas ) *365', 27),
+(1, 11, 34, '5).- Tiempo productivo de equipo (up time)', 28),
+(1, 11, 34, '6).- Indicador de desempeño de proveedores', 29),
+(1, 11, 34, '7).- Indicadores de desempeño de procesos básicos (Centrales - Soporte - Insumos - Control)', 30),
+(1, 11, 34, '8).- Indicadores de desempeño del Sistema de Control de la Calidad', 31),
+(1, 11, 35, '1).- Indicadores en materia ecologica: indices de contaminación de agua, aire, ruido, entre otros', 32),
+(1, 11, 36, '1).- Indicadores en Factores Psicosociales y Entorno Organizacional Favorable', 33),
+(1, 11, 37, '1).- Indicadores en Resiliencia y Gestión de Entornos', 34);
 
 -- Reactivar revisión de llaves foráneas
 SET FOREIGN_KEY_CHECKS = 1;
